@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,13 +24,31 @@ class Product
     private $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Config", inversedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Config", mappedBy="product", orphanRemoval=true)
      */
     private $config;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    public function __construct()
+    {
+        $this->config = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return (string)$this->getName();
     }
 
     public function getName(): ?string
@@ -43,14 +63,45 @@ class Product
         return $this;
     }
 
-    public function getConfig(): ?Config
+    /**
+     * @return Collection|Config[]
+     */
+    public function getConfig(): Collection
     {
         return $this->config;
     }
 
-    public function setConfig(?Config $config): self
+    public function addConfig(Config $config): self
     {
-        $this->config = $config;
+        if (!$this->config->contains($config)) {
+            $this->config[] = $config;
+            $config->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConfig(Config $config): self
+    {
+        if ($this->config->contains($config)) {
+            $this->config->removeElement($config);
+            // set the owning side to null (unless already changed)
+            if ($config->getProduct() === $this) {
+                $config->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

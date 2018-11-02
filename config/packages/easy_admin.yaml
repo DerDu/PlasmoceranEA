@@ -1,6 +1,27 @@
 easy_admin:
+    site_name: Plasmoceran
+
+    formats:
+        date:     'd.m.Y'
+        time:     'H:i:s'
+        datetime: 'd.m.Y H:i:s'
+
     entities:
         # List the entity class name you want to manage
-        - App\Entity\Product
-        - App\Entity\Config
-        - App\Entity\Data
+        Product:
+            class: App\Entity\Product
+#            list:
+#                fields:
+#                    - name
+#                    - description
+        Config:
+            class: App\Entity\Config
+#            list:
+#                fields:
+#                    - name
+#                    - description
+        Data:
+            class: App\Entity\Data
+
+    design:
+        brand_color: '#c00d0d'

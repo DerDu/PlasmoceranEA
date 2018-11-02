@@ -19,7 +19,18 @@ class Config
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Product", mappedBy="config", cascade={"persist", "remove"})
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="config")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $product;
 
@@ -27,6 +38,7 @@ class Config
      * @ORM\OneToMany(targetEntity="App\Entity\Data", mappedBy="config", orphanRemoval=true)
      */
     private $data;
+
 
     public function __construct()
     {
@@ -36,24 +48,6 @@ class Config
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getProduct(): ?Product
-    {
-        return $this->product;
-    }
-
-    public function setProduct(?Product $product): self
-    {
-        $this->product = $product;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newConfig = $product === null ? null : $this;
-        if ($newConfig !== $product->getConfig()) {
-            $product->setConfig($newConfig);
-        }
-
-        return $this;
     }
 
     /**
@@ -83,6 +77,50 @@ class Config
                 $data->setConfig(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return (string)$this->getName();
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }
