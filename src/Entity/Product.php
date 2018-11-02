@@ -21,6 +21,11 @@ class Product
      */
     private $name;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Config", inversedBy="product", cascade={"persist", "remove"})
+     */
+    private $config;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +39,18 @@ class Product
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getConfig(): ?Config
+    {
+        return $this->config;
+    }
+
+    public function setConfig(?Config $config): self
+    {
+        $this->config = $config;
 
         return $this;
     }

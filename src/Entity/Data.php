@@ -16,8 +16,26 @@ class Data
      */
     private $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Config", inversedBy="data")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $config;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getConfig(): ?Config
+    {
+        return $this->config;
+    }
+
+    public function setConfig(?Config $config): self
+    {
+        $this->config = $config;
+
+        return $this;
     }
 }
