@@ -10,16 +10,19 @@ easy_admin:
         # List the entity class name you want to manage
         Product:
             class: App\Entity\Product
-#            list:
-#                fields:
-#                    - name
-#                    - description
+            list:
+                fields:
+                    - { property: 'name', label: 'Name' }
+                    - { property: 'description', label: 'Beschreibung' }
+                    - { property: 'config', label: 'Konfigurationen' }
         Config:
             class: App\Entity\Config
-#            list:
-#                fields:
-#                    - name
-#                    - description
+            list:
+                fields:
+                - { property: 'name', label: 'Name' }
+                - { property: 'description', label: 'Beschreibung' }
+                - { property: 'product', label: 'Produkt' }
+                - { property: 'data', label: 'Messdaten' }
         Data:
             class: App\Entity\Data
 
