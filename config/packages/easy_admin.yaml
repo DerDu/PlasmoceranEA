@@ -10,14 +10,18 @@ easy_admin:
         # List the entity class name you want to manage
         Product:
             class: App\Entity\Product
+            label: 'Produkte'
             list:
+                title: 'Produkte'
                 fields:
                     - { property: 'name', label: 'Name' }
                     - { property: 'description', label: 'Beschreibung' }
                     - { property: 'config', label: 'Konfigurationen' }
         Config:
             class: App\Entity\Config
+            label: 'Konfigurationen'
             list:
+                title: 'Konfigurationen'
                 fields:
                 - { property: 'name', label: 'Name' }
                 - { property: 'description', label: 'Beschreibung' }
@@ -25,6 +29,9 @@ easy_admin:
                 - { property: 'data', label: 'Messdaten' }
         Data:
             class: App\Entity\Data
+            label: 'Messdaten'
+            list:
+                title: 'Messdaten'
 
     design:
         brand_color: '#c00d0d'
